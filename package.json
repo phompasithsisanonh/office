@@ -24,14 +24,5 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/phompasithsisanonh/office.git"
-  },
-  "bugs": {
-    "url": "https://github.com/phompasithsisanonh/office/issues"
-  },
-  "homepage": "https://github.com/phompasithsisanonh/office#readme",
   "description": ""
 }
