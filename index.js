@@ -40,7 +40,7 @@ app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 app.use('/api', api);
 
-const port = 8000;
+const port = process.env.PORT || 8080
 
 const start = async () => {
   try {
