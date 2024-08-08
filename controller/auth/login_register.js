@@ -47,21 +47,21 @@ const loginController = async (req, res, next) => {
     if (!tel || !password) {
       return res.status(404).json({
         success: false,
-        message: "Invalid email or password",
+        message: "电话号码 与 密码不匹配",
       });
     }
     const user = await UsersModel.findOne({ tel });
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "Email is not registerd",
+        message: "电话号码已经被注册了",
       });
     }
     const match = await compare1(password, user.password);
     if (!match) {
       return res.status(404).send({
         success: false,
-        message: "Invalid Password",
+        message: "密码不对",
       });
     }
     const token = await JWT.sign({ _id: user._id }, "ab231", {
@@ -69,7 +69,7 @@ const loginController = async (req, res, next) => {
     });
     res.status(200).json({
       success: true,
-      message: "login successfully",
+      message: "登陆成功",
       user: {
         _id: user._id,
         tel: user.tel,
@@ -81,7 +81,7 @@ const loginController = async (req, res, next) => {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "error in login",
+      message: "无措登录",
       err,
     });
   }

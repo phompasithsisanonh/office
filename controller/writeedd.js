@@ -20,11 +20,12 @@ const writeedd = async (req, res) => {
       exchange,
       categoryExpence,
       codeNumber,
+      total: balance * exchange || balance * 1,
     });
     await products.save();
     res.status(200).json({
       success: true,
-      message: "Product Created Successfully",
+      message: "保存成功",
       products,
     });
   } catch (error) {
@@ -32,7 +33,7 @@ const writeedd = async (req, res) => {
     res.status(500).json({
       success: false,
       error,
-      message: "Error in crearing product",
+      message: "信息填写不完整",
     });
   }
 };

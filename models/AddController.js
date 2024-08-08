@@ -19,7 +19,7 @@ const productSchema = new Schema(
       required: true,
     },
     balance: {
-      type: String,
+      type: Number,
       required: true,
     },
     typeExchange: {
@@ -28,7 +28,10 @@ const productSchema = new Schema(
     },
     exchange: {
       type: Number,
-      required: true,
+      default:1,
+    },
+    total:{
+      type: Number,
     },
     categoryExpence: {
       type: String, // Corrected line
