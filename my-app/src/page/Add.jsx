@@ -34,7 +34,7 @@ function Add() {
 
       await axios
         .post(
-          `http://localhost:8000/api/checkcode `,
+          `https://backend-nu-sooty.vercel.app/api/checkcode `,
           {
             date,
             list,

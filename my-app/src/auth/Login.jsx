@@ -12,7 +12,7 @@ function Login() {
     try {
      
       await axios.post(
-        `http://localhost:8000/api/login`,
+        `https://backend-nu-sooty.vercel.app/api/login`,
         {
           tel,
           password

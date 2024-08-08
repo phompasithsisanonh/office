@@ -85,7 +85,7 @@ function ListExp() {
     try {
       setLoading(true);
       await axios
-        .delete(`http://localhost:8000/api/delete/${id}`)
+        .delete(`https://backend-nu-sooty.vercel.app/api/delete/${id}`)
         .then((res) => {
           Swal.fire({
             title: "成功",
@@ -118,7 +118,7 @@ function ListExp() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:8000/api/listAll?page=${page}&limit=${limit}&categoryExpence=${categoryExpence}`
+          `https://backend-nu-sooty.vercel.app/api/listAll?page=${page}&limit=${limit}&categoryExpence=${categoryExpence}`
         );
         setCreateData(response.data.products);
         setTotal(response.data.total);

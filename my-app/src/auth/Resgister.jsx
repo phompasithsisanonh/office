@@ -12,7 +12,7 @@ function Resgister() {
   const handleAdmin = async () => {
     try {
       await axios
-        .post(`http://localhost:8000/api/register`, {
+        .post(`https://backend-nu-sooty.vercel.app/api/register`, {
           password,
           tel,
         })
