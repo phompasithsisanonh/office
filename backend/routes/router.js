@@ -9,6 +9,7 @@ const {
 } = require("../controller/auth/login_register");
 const { writeedd } = require("../controller/writeedd");
 const { listAll } = require("../controller/listAll");
+const { deleteController } = require("../controller/deleteController");
 const AuthTicat = async (req, res, next) => {
   try {
     // 1) Getting token and check of it's there
@@ -50,4 +51,5 @@ router.post("/checkcode", AuthTicat, writeedd);
 router.post("/register", registerController);
 router.post("/login", loginController);
 router.get('/listAll',listAll)
+router.delete('/delete/:id',deleteController)
 module.exports = router;

@@ -16,12 +16,25 @@ function Add() {
   const [exchange, setExchange] = useState("");
   const [categoryExpence, setCategoryExpence] = useState("");
   const [codeNumber, setCodeNumber] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleCurrencyChange = (e) => {
+    const newType = e.target.value;
+    setTypeExchange(newType);
+    setIsDisabled(newType === "KIP");
+    setExchange("");
+    if (newType !== "KIP") {
+      setExchange("");
+    }
+   
+  };
   const handleOrder = async () => {
     try {
       setIsLoading(true);
+
       await axios
         .post(
-          "http://localhost:8000/api/checkcode ",
+          `http://localhost:8000/api/checkcode `,
           {
             date,
             list,
@@ -44,7 +57,7 @@ function Add() {
             title: "成功",
             text: res.data.message,
             icon: "success",
-            confirmButtonText: "Close",
+            confirmButtonText: "关",
           });
         })
         .catch((err) => {
@@ -52,7 +65,7 @@ function Add() {
             title: "无措",
             text: err.response.data.message,
             icon: "error",
-            confirmButtonText: "Close",
+            confirmButtonText: "关",
           });
           console.log(err);
         });
@@ -63,9 +76,7 @@ function Add() {
   };
   return (
     <Box>
-
       <Bar /> {/* Use your custom Bar component here */}
-
       <Flex
         className="adds"
         direction={isSmallerThan600 ? "column" : "row"}
@@ -74,7 +85,7 @@ function Add() {
         paddingTop="30px"
         gap="20px" // Add some spacing between input groups
       >
-         <button onClick={() => navigate("/")}>主页</button>
+        <button onClick={() => navigate("/")}>主页</button>
         <Stack className="order_1">
           <label>年/月/日</label>
           <Input
@@ -138,7 +149,7 @@ function Add() {
           <label>类型货币</label>
           <select
             value={typeExchange}
-            onChange={(e) => setTypeExchange(e.target.value)}
+            onChange={handleCurrencyChange}
             className="Input_order1"
           >
             <option value="">类型货币</option>
@@ -148,7 +159,6 @@ function Add() {
           </select>
         </Stack>
         <Stack className="order_1">
-          
           <label>类型花费</label>
           <select
             value={categoryExpence}
@@ -175,6 +185,7 @@ function Add() {
         <Stack className="order_1">
           <label>汇率</label>
           <Input
+            disabled={isDisabled}
             value={exchange}
             onChange={(e) => setExchange(e.target.value)}
             type="text"

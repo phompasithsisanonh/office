@@ -12,7 +12,7 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
 const api = require('./routes/router')
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:8001"],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -40,7 +40,7 @@ app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 app.use('/api', api);
 
-const port = 8000;
+const port = process.env.PORT || 8080
 
 const start = async () => {
   try {
