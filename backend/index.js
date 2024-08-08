@@ -12,7 +12,7 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
 const api = require('./routes/router')
 const corsOptions = {
-  origin: ["https://office-zeta.vercel.app"],
+  origin: ["office-zeta.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
 };
