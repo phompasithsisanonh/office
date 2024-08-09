@@ -35,10 +35,10 @@ app.use(cookieParser("ab231"));
 app.use(methodOverride("_method"));
 
 
+app.use('/api', api);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
-app.use('/api', api);
 
 const port = process.env.PORT || 8080
 const isProduction = process.env.NODE_ENV === 'production';
@@ -61,6 +61,7 @@ const start = async () => {
     app.listen(port, () => console.log(`Server is listening port ${port}...`));
   } catch (error) {
     console.log(error);
+    process.exit(1);
   }
 };
 
