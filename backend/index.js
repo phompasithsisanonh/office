@@ -42,20 +42,20 @@ require("dotenv").config();
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 const port = process.env.PORT || 8080
-const isProduction = process.env.NODE_ENV === 'production';
-const isTesting = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'testing';
+// const isProduction = process.env.NODE_ENV === 'production';
+// const isTesting = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'testing';
 
 app.use('/api', api);
-if (isProduction) {
-  console.log('This is production!');
-  // Production-specific configuration, error handling, etc.
-} else if (isTesting) {
-  console.log('This is testing!');
-  // Testing-specific configuration, mocks, etc.
-} else {
-  console.log('This is development!');
-  // Development-specific configuration, logging, etc.
-}
+// if (isProduction) {
+//   console.log('This is production!');
+//   // Production-specific configuration, error handling, etc.
+// } else if (isTesting) {
+//   console.log('This is testing!');
+//   // Testing-specific configuration, mocks, etc.
+// } else {
+//   console.log('This is development!');
+//   // Development-specific configuration, logging, etc.
+// }
 const start = async () => {
   try {
     // connectDB
