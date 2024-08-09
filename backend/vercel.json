@@ -5,7 +5,7 @@
     {
       "src": "./(.*)",
       "dest": "/",
-      "  methods": ["GET"]
+      "methods": ["GET"]
     }
   ],
   "env": {
