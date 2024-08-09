@@ -14,7 +14,6 @@ const api = require('./routes/router')
 const corsOptions = {
   origin: ["*"],
   credentials: true,
-  methods :["GET","POST","DELETE"],
   optionSuccessStatus: 200,
 };
 const sessionOptions = {
