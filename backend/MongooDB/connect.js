@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const options = {
   serverSelectionTimeoutMS: 5000,
   autoIndex: false,
@@ -9,10 +9,9 @@ const options = {
 
 const connectDB = (url) => {
   return mongoose
-  .connect(process.env.MONGODB_URL, options)
-  .then(() => console.log("DB is connected"))
-  .catch((err) => console.error(err));
+    .connect(process.env.MONGODB_URL)
+    .then(() => console.log("DB is connected"))
+    .catch((err) => console.error(err));
+};
 
-}
-
-module.exports = connectDB
+module.exports = connectDB;
