@@ -9,7 +9,8 @@
   "functions": {
     "./index.js": {
       "maxDuration": 30
-    },
+    }
+  },
   "source": "/feedback/(?!general)",
   "destination": "/api/feedback/general"
 }
