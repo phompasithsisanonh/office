@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -37,15 +37,14 @@ app.use(cookieParser("ab231"));
 app.use(methodOverride("_method"));
 
 
-app.use('/api', api);
-
+require("dotenv").config();
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
-
 const port = process.env.PORT || 8080
 const isProduction = process.env.NODE_ENV === 'production';
 const isTesting = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'testing';
 
+app.use('/api', api);
 if (isProduction) {
   console.log('This is production!');
   // Production-specific configuration, error handling, etc.
