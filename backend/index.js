@@ -12,8 +12,9 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorMiddleware = require('./middleware/error-handler');
 const api = require('./routes/router')
 const corsOptions = {
-  origin: ["http://localhost:8001"],
+  origin: ["*"],
   credentials: true,
+  methods :["GET","POST","DELETE"],
   optionSuccessStatus: 200,
 };
 const sessionOptions = {
@@ -27,6 +28,7 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
+app.options("",cors(corsOptions))
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
