@@ -1,4 +1,4 @@
-
+const MongoStore = require('connect-mongo'); // Or the appropriate import for your chosen store
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -18,6 +18,9 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 const sessionOptions = {
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://localhost:27017/Office'
+  }),
   secret: "abcde111",
   cookie: {
     httpOnly: true,
@@ -28,7 +31,6 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
-app.options("",cors(corsOptions))
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
