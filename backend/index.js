@@ -1,4 +1,4 @@
-const MongoStore = require('connect-mongo'); // Or the appropriate import for your chosen store
+const MongoStore = require("connect-mongo"); // Or the appropriate import for your chosen store
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -7,10 +7,10 @@ const ms = require("ms");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const connectDB =require('./MongooDB/connect')
-const notFoundMiddleware = require('./middleware/not-found');
-const errorMiddleware = require('./middleware/error-handler');
-const api = require('./routes/router')
+const connectDB = require("./MongooDB/connect");
+const notFoundMiddleware = require("./middleware/not-found");
+const errorMiddleware = require("./middleware/error-handler");
+const api = require("./routes/router");
 const corsOptions = {
   origin: ["*"],
   credentials: true,
@@ -18,7 +18,7 @@ const corsOptions = {
 };
 const sessionOptions = {
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/Office'
+    mongoUrl: "mongodb://localhost:27017/Office",
   }),
   secret: "abcde111",
   cookie: {
@@ -37,12 +37,22 @@ app.use(session(sessionOptions));
 app.use(cookieParser("ab231"));
 app.use(methodOverride("_method"));
 
+const isProduction = process.env.NODE_ENV === "production";
+const isTesting =
+  process.env.NODE_ENV === "test" || process.env.NODE_ENV === "testing";
 
+if (isProduction) {
+  console.log("This is production!");
+} else if (isTesting) {
+  console.log("This is testing!");
+} else {
+  console.log("This is development!");
+}
 require("dotenv").config();
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
-const port = process.env.PORT || 8080
-app.use('/api', api);
+const port = process.env.PORT || 8080;
+app.use("/api", api);
 
 const start = async () => {
   try {
@@ -56,16 +66,3 @@ const start = async () => {
 };
 
 start();
-// const isProduction = process.env.NODE_ENV === 'production';
-// const isTesting = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'testing';
-
-// if (isProduction) {
-//   console.log('This is production!');
-//   // Production-specific configuration, error handling, etc.
-// } else if (isTesting) {
-//   console.log('This is testing!');
-//   // Testing-specific configuration, mocks, etc.
-// } else {
-//   console.log('This is development!');
-//   // Development-specific configuration, logging, etc.
-// }

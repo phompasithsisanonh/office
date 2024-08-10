@@ -12,7 +12,6 @@ const { listAll } = require("../controller/listAll");
 const { deleteController } = require("../controller/deleteController");
 const AuthTicat = async (req, res, next) => {
   try {
-    // 1) Getting token and check of it's there
     let token;
     if (
       req.headers.authorization &&
