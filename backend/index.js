@@ -18,7 +18,7 @@ const corsOptions = {
 };
 const sessionOptions = {
   store: MongoStore.create({
-    mongoUrl: "mongodb://localhost:27017/Office",
+    mongoUrl: "mongodb://localhost:27017",
   }),
   secret: "abcde111",
   cookie: {
