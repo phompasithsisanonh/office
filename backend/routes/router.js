@@ -12,6 +12,7 @@ const { listAll } = require("../controller/listAll");
 const { deleteController } = require("../controller/deleteController");
 const AuthTicat = async (req, res, next) => {
   try {
+
     let token;
     if (
       req.headers.authorization &&

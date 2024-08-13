@@ -1,4 +1,4 @@
-const MongoStore = require("connect-mongo"); // Or the appropriate import for your chosen store
+// const MongoStore = require("connect-mongo"); // Or the appropriate import for your chosen store
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -12,14 +12,14 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
 const api = require("./routes/router");
 const corsOptions = {
-  origin: ["*"],
+  origin: ["https://office-zeta.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
 };
 const sessionOptions = {
-  store: MongoStore.create({
-    mongoUrl: "mongodb://localhost:27017",
-  }),
+  // store: MongoStore.create({
+  //   mongoUrl: "mongodb://localhost:27017/Office",
+  // }),
   secret: "abcde111",
   cookie: {
     httpOnly: true,
