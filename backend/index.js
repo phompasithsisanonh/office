@@ -4,31 +4,45 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const ms = require("ms");
-const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const connectDB = require("./MongooDB/connect");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
 const api = require("./routes/router");
+
+
+const session = require("express-session");
+const { createClient } = require("redis");
+const RedisStore = require("connect-redis").default; // Correct import
 const corsOptions = {
   origin: ["https://office-zeta.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
 };
+
+// Initialize client.
+let redisClient = createClient({
+  url: "redis://127.0.0.1:6379",
+  legacyMode: true,
+});
+redisClient.connect().catch(console.error);
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+});
 const sessionOptions = {
-  // store: MongoStore.create({
-  //   mongoUrl: "mongodb://localhost:27017/Office",
-  // }),
+  store: redisStore,
   secret: "abcde111",
+  resave: false,
+  saveUninitialized: false,
+  rolling: true,
   cookie: {
     httpOnly: true,
     secure: true,
     maxAge: ms("7d"),
   },
-  rolling: true,
-  resave: false,
-  saveUninitialized: false,
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
