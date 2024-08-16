@@ -94,7 +94,9 @@ const start = async () => {
     // connectDB
     if (!process.env.MONGODB_URL) {
       console.error('MONGODB_URL environment variable is not set.');
+      module.exports.handler = serverless(app);
       process.exit(1);
+
     }
     await connectDB(process.env.MONGODB_URL);
     app.listen(port, () => console.log(`Server is listening port ${port}...`));
@@ -103,5 +105,5 @@ const start = async () => {
     process.exit(1);
   }
 };
-module.exports.handler = serverless(app);
+
 start();
