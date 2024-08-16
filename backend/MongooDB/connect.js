@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const options = {
   serverSelectionTimeoutMS: 5000,
   autoIndex: false,
@@ -7,14 +8,13 @@ const options = {
   family: 4,
 };
 
-const connectDB = (url) => {
+const connectDB = async (url) => {
   try {
-    return mongoose
-      .connect(url,options )
-      .then((res) => console.log(`DB is connected`))
-      .catch((err) => console.error(err));
+    await mongoose.connect(url, options);
+    console.log("DB is connected");
   } catch (err) {
-    console.log(err);
+    console.error("Error connecting to DB:", err);
+    process.exit(1); // Exit the process if the database connection fails
   }
 };
 

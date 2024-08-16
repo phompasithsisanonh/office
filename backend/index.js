@@ -91,6 +91,10 @@ app.use("/api", api);
 const start = async () => {
   try {
     // connectDB
+    if (!process.env.MONGODB_URL) {
+      console.error('MONGODB_URL environment variable is not set.');
+      process.exit(1);
+    }
     await connectDB(process.env.MONGODB_URL);
     app.listen(port, () => console.log(`Server is listening port ${port}...`));
   } catch (error) {
