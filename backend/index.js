@@ -1,5 +1,5 @@
 // const MongoStore = require("connect-mongo"); // Or the appropriate import for your chosen store
-require('dotenv').config();
+require("dotenv").config();
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -11,7 +11,7 @@ const connectDB = require("./MongooDB/connect");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
 const api = require("./routes/router");
-
+const isProduction = process.env.NODE_ENV === "production";
 const session = require("express-session");
 const { createClient } = require("redis");
 const RedisStore = require("connect-redis").default; // Correct import
@@ -21,39 +21,50 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-console.log(`dddd ${process.env.MONGODB_URL }`)
-// Initialize client.
-let redisClient = createClient({
-  url :process.env.REDIS_URL,
-  legacyMode: true,
-});
-(async () => {
+const setupRedis = async () => {
+  let redisClient = createClient({
+    url: process.env.REDIS_URL,
+    legacyMode: true,
+  });
+
+  redisClient.on("error", (err) => {
+    console.error("Redis Client Error", err);
+  });
+
   try {
-    await redisClient.connect().catch(console.error);
+    await redisClient.connect();
     console.log("Connected to Redis");
-    await redisClient.quit(); 
   } catch (err) {
     console.error("Error connecting to Redis:", err);
   }
-})();
 
-// Initialize store.
-let redisStore = new RedisStore({
-  client: redisClient,
-  prefix: "myapp:",
-});
+  return redisClient;
+};
+
+const setupSession = (redisClient) => {
+  return new RedisStore({
+    client: redisClient,
+    prefix: "myapp:",
+  });
+};
+const redisClient = async () => {
+  await setupRedis();
+};
+const redisStore = setupSession(redisClient);
+
 const sessionOptions = {
   store: redisStore,
-  secret: "abcde111",
+  secret: process.env.SESSION_SECRET || "defaultSecret",
   resave: false,
   saveUninitialized: false,
   rolling: true,
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure: isProduction, // Ensure this is true only in production
     maxAge: ms("7d"),
   },
 };
+
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -61,7 +72,6 @@ app.use(session(sessionOptions));
 app.use(cookieParser("ab231"));
 app.use(methodOverride("_method"));
 
-const isProduction = process.env.NODE_ENV === "production";
 const isTesting =
   process.env.NODE_ENV === "test" || process.env.NODE_ENV === "testing";
 
