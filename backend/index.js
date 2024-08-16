@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const ms = require("ms");
-const serverless = require('serverless-http');
+const serverless = require("serverless-http");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const connectDB = require("./MongooDB/connect");
@@ -16,90 +16,89 @@ const isProduction = process.env.NODE_ENV === "production";
 const session = require("express-session");
 const { createClient } = require("redis");
 const RedisStore = require("connect-redis").default; // Correct import
-const corsOptions = {
-  origin: ["https://office-zeta.vercel.app"],
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
-const setupRedis = async () => {
-  let redisClient = createClient({
-    url: process.env.REDIS_URL,
-    legacyMode: true,
-  });
-
-  redisClient.on("error", (err) => {
-    console.error("Redis Client Error", err);
-  });
-
-  try {
-    await redisClient.connect();
-    console.log("Connected to Redis");
-  } catch (err) {
-    console.error("Error connecting to Redis:", err);
-  }
-
-  return redisClient;
-};
-
-const setupSession = (redisClient) => {
-  return new RedisStore({
-    client: redisClient,
-    prefix: "myapp:",
-  });
-};
-const redisClient = async () => {
-  await setupRedis();
-};
-const redisStore = setupSession(redisClient);
-
-const sessionOptions = {
-  store: redisStore,
-  secret: process.env.SESSION_SECRET || "defaultSecret",
-  resave: false,
-  saveUninitialized: false,
-  rolling: true,
-  cookie: {
-    httpOnly: true,
-    secure: isProduction, // Ensure this is true only in production
-    maxAge: ms("7d"),
-  },
-};
-
-app.use(cors(corsOptions));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(session(sessionOptions));
-app.use(cookieParser("ab231"));
-app.use(methodOverride("_method"));
-
-const isTesting =
-  process.env.NODE_ENV === "test" || process.env.NODE_ENV === "testing";
-
-if (isProduction) {
-  console.log("This is production!");
-} else if (isTesting) {
-  console.log("This is testing!");
-} else {
-  console.log("This is development!");
-}
-
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
-const port = process.env.PORT || 8080;
-app.use("/api", api);
-
 const start = async () => {
   try {
+    const corsOptions = {
+      origin: ["https://office-zeta.vercel.app"],
+      credentials: true,
+      optionSuccessStatus: 200,
+    };
+
+    const setupRedis = async () => {
+      let redisClient = createClient({
+        url: process.env.REDIS_URL,
+        legacyMode: true,
+      });
+
+      redisClient.on("error", (err) => {
+        console.error("Redis Client Error", err);
+      });
+
+      try {
+        await redisClient.connect();
+        console.log("Connected to Redis");
+      } catch (err) {
+        console.error("Error connecting to Redis:", err);
+      }
+
+      return redisClient;
+    };
+
+    const setupSession = (redisClient) => {
+      return new RedisStore({
+        client: redisClient,
+        prefix: "myapp:",
+      });
+    };
+    const redisClient = async () => {
+      await setupRedis();
+    };
+    const redisStore = setupSession(redisClient);
+
+    const sessionOptions = {
+      store: redisStore,
+      secret: process.env.SESSION_SECRET || "defaultSecret",
+      resave: false,
+      saveUninitialized: false,
+      rolling: true,
+      cookie: {
+        httpOnly: true,
+        secure: isProduction, // Ensure this is true only in production
+        maxAge: ms("7d"),
+      },
+    };
+
+    app.use(cors(corsOptions));
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(session(sessionOptions));
+    app.use(cookieParser("ab231"));
+    app.use(methodOverride("_method"));
+
+    const isTesting =
+      process.env.NODE_ENV === "test" || process.env.NODE_ENV === "testing";
+
+    if (isProduction) {
+      console.log("This is production!");
+    } else if (isTesting) {
+      console.log("This is testing!");
+    } else {
+      console.log("This is development!");
+    }
+
+    app.use(notFoundMiddleware);
+    app.use(errorMiddleware);
+    const port = process.env.PORT || 8080;
+    app.use("/api", api);
+
     // connectDB
     if (!process.env.MONGODB_URL) {
-      console.error('MONGODB_URL environment variable is not set.');
-      module.exports.handler = serverless(app);
+      console.error("MONGODB_URL environment variable is not set.");
       process.exit(1);
-
     }
     await connectDB(process.env.MONGODB_URL);
     app.listen(port, () => console.log(`Server is listening port ${port}...`));
+    module.exports.handler = serverless(app);
   } catch (error) {
     console.log(error);
     process.exit(1);
