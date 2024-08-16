@@ -1,4 +1,5 @@
 // const MongoStore = require("connect-mongo"); // Or the appropriate import for your chosen store
+require('dotenv').config();
 const methodOverride = require("method-override");
 const express = require("express");
 const app = express();
@@ -20,12 +21,12 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
+console.log(`dddd ${process.env.MONGODB_URL }`)
 // Initialize client.
 let redisClient = createClient({
-  url :'redis://localhost:6379',
+  url :process.env.REDIS_URL,
   legacyMode: true,
 });
-
 (async () => {
   try {
     await redisClient.connect().catch(console.error);
@@ -71,7 +72,7 @@ if (isProduction) {
 } else {
   console.log("This is development!");
 }
-require("dotenv").config();
+
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 const port = process.env.PORT || 8080;
