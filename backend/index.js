@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const ms = require("ms");
+const serverless = require('serverless-http');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const connectDB = require("./MongooDB/connect");
@@ -102,5 +103,5 @@ const start = async () => {
     process.exit(1);
   }
 };
-
+module.exports.handler = serverless(app);
 start();
