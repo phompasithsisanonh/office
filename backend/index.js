@@ -11,7 +11,6 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorMiddleware = require("./middleware/error-handler");
 const api = require("./routes/router");
 
-
 const session = require("express-session");
 const { createClient } = require("redis");
 const RedisStore = require("connect-redis").default; // Correct import
@@ -23,10 +22,20 @@ const corsOptions = {
 
 // Initialize client.
 let redisClient = createClient({
-  url: "redis://127.0.0.1:6379",
+  url :'redis://localhost:6379',
   legacyMode: true,
 });
-redisClient.connect().catch(console.error);
+
+(async () => {
+  try {
+    await redisClient.connect().catch(console.error);
+    console.log("Connected to Redis");
+    await redisClient.quit(); 
+  } catch (err) {
+    console.error("Error connecting to Redis:", err);
+  }
+})();
+
 // Initialize store.
 let redisStore = new RedisStore({
   client: redisClient,
