@@ -51,5 +51,9 @@ router.post("/checkcode", AuthTicat, writeedd);
 router.post("/register", registerController);
 router.post("/login", loginController);
 router.get('/listAll',listAll)
+router.get('/', (req, res) => {
+  res.send('Hello from the API!');
+});
+
 router.delete('/delete/:id',deleteController)
 module.exports = router;
