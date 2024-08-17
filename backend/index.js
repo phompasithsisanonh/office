@@ -74,7 +74,6 @@ const start = async () => {
     app.use(session(sessionOptions));
     app.use(cookieParser("ab231"));
     app.use(methodOverride("_method"));
-
     const isTesting =
       process.env.NODE_ENV === "test" || process.env.NODE_ENV === "testing";
 
