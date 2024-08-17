@@ -15,7 +15,7 @@ const api = require("./routes/router");
 const isProduction = process.env.NODE_ENV === "production";
 const session = require("express-session");
 const { createClient } = require("redis");
-const RedisStore = require("connect-redis").default; // Correct import
+const RedisStore = require("connect-redis").default; 
 const start = async () => {
   try {
     const corsOptions = {
@@ -63,7 +63,7 @@ const start = async () => {
       rolling: true,
       cookie: {
         httpOnly: true,
-        secure: isProduction, // Ensure this is true only in production
+        secure: isProduction,
         maxAge: ms("7d"),
       },
     };
