@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "/backend/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.js"
+      "dest": "/backend/index.js"
     }
   ],
   "env": {
-   " MONGODB_URL":"mongodb+srv://phompasit2323:game00827aX@cluster1.ngd6d.mongodb.net/office",
+   "MONGODB_URL":"mongodb+srv://phompasit2323:game00827aX@cluster1.ngd6d.mongodb.net/office",
     "PORT": "8000",
     "REDIS_URL":"redis://localhost:6379",
     "NODE_ENV":"production",
