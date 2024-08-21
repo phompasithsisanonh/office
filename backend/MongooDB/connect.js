@@ -9,7 +9,7 @@ const options = {
 
 const connectDB = async (url) => {
   try {
-    await mongoose.connect(url, options,{
+    await mongoose.connect(url,{
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
