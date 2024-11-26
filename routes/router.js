@@ -11,6 +11,6 @@ router.post("/checkcode", writeedd);
 router.post("/register", registerController);
 router.post("/login", loginController);
 router.get('/listAll',listAll)
-
+// ddd
 router.delete('/delete/:id',deleteController)
 module.exports = router;
