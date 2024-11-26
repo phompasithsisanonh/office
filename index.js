@@ -19,7 +19,7 @@ const RedisStore = require("connect-redis").default;
 const start = async () => {
   try {
     const corsOptions = {
-      origin: ["https://f-theta-lac.vercel.app/"],
+      origin: ["https://f-57zz7af56-jhs-projects-5bf0d13e.vercel.app/"],
       credentials: true,
       optionSuccessStatus: 200,
     };
