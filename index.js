@@ -19,7 +19,7 @@ const RedisStore = require("connect-redis").default;
 const start = async () => {
   try {
     const corsOptions = {
-      origin: ["https://my-app-phi-pied.vercel.app/"],
+      origin: ["https://my-app-phi-pied.vercel.app"],
       credentials: true,
       optionSuccessStatus: 200,
     };
