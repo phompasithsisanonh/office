@@ -104,4 +104,3 @@ const start = async () => {
   }
 };
 
-start();
