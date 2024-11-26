@@ -9,10 +9,11 @@ const writeedd = async (req, res) => {
       exchange,
       categoryExpence,
       codeNumber,
+      country,
+      note
     } = req.body;
 
     const products = new productModel({
-      user: req.user._id,
       date,
       list,
       balance,
@@ -20,8 +21,13 @@ const writeedd = async (req, res) => {
       exchange,
       categoryExpence,
       codeNumber,
+      country,
+      note,
       total: balance * exchange || balance * 1,
     });
+    // Format the balance and total with commas for the response
+    products.balance.toLocaleString();
+    products.total.toLocaleString();
     await products.save();
     res.status(200).json({
       success: true,

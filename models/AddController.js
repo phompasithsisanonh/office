@@ -1,11 +1,6 @@
 const { Schema, model } = require("mongoose");
 const productSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "UsersModel",
-    },
     date: {
       type: String,
       required: true,
@@ -33,10 +28,19 @@ const productSchema = new Schema(
     total:{
       type: Number,
     },
+    country:{
+      type: String,
+      required: true,
+      enum:["泰国","老挝"]
+    },
     categoryExpence: {
       type: String, // Corrected line
       required: true,
     },
+    note:{
+      type: String, // Corrected line
+      required: true,
+    }
   },
   { timestamps: true }
 );

@@ -22,10 +22,9 @@ const registerController = async (req, res) => {
         message: "Already Register please login",
       });
     }
-    const hashedPassword = await hashPassword(password);
     const user = await new UsersModel({
       tel,
-      password: hashedPassword,
+      password: password,
     }).save();
     res.status(201).json({
       success: true,
@@ -57,16 +56,6 @@ const loginController = async (req, res, next) => {
         message: "电话号码已经被注册了",
       });
     }
-    const match = await compare1(password, user.password);
-    if (!match) {
-      return res.status(404).send({
-        success: false,
-        message: "密码不对",
-      });
-    }
-    const token = await JWT.sign({ _id: user._id }, "ab231", {
-      expiresIn: "7d",
-    });
     res.status(200).json({
       success: true,
       message: "登陆成功",
@@ -75,7 +64,6 @@ const loginController = async (req, res, next) => {
         tel: user.tel,
         password: user.password,
       },
-      token,
     });
   } catch (err) {
     console.log(err);

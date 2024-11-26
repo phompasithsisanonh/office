@@ -1,0 +1,13 @@
+service: my-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - http:
+          path: /api
+          method: any

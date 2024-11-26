@@ -12,7 +12,7 @@ const { listAll } = require("../controller/listAll");
 const { deleteController } = require("../controller/deleteController");
 const AuthTicat = async (req, res, next) => {
   try {
-    // 1) Getting token and check of it's there
+
     let token;
     if (
       req.headers.authorization &&
@@ -47,9 +47,10 @@ const AuthTicat = async (req, res, next) => {
     });
   }
 };
-router.post("/checkcode", AuthTicat, writeedd);
+router.post("/checkcode", writeedd);
 router.post("/register", registerController);
 router.post("/login", loginController);
 router.get('/listAll',listAll)
+
 router.delete('/delete/:id',deleteController)
 module.exports = router;

@@ -13,9 +13,4 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
-userSchema.virtual("AddController", {
-  ref: "AddController",
-  localField: "_id",
-  foreignField: "user",
-});
 module.exports = model("UsersModel", userSchema);
