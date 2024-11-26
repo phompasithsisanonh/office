@@ -1,6 +1,5 @@
-const JWT = require("jsonwebtoken");
+
 const UsersModel = require("../../models/UserModel");
-const { compare1, hashPassword } = require("../../hashPassword/hash");
 const registerController = async (req, res) => {
   try {
     const { tel, password } = req.body;
