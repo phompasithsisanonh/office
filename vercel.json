@@ -13,7 +13,7 @@
     }
   ],
   "env": {
-    "MONGODB_URL": "mongodb+srv://phompasit2323:game00827aX@cluster1.ngd6d.mongodb.net/office",
+    "MONGODB_URL": "mongodb+srv://kingsatur16:laos1212aX@cluster11office.wy6qs.mongodb.net/",
     "PORT": "8000",
     "REDIS_URL": "redis://localhost:6379",
     "NODE_ENV": "production",
