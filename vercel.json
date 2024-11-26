@@ -1,23 +1,9 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "index.js",
-      "use": "@now/node"
-    }
+    { "src": "index.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "index.js"
-    }
-  ],
-  "env": {
-    "MONGODB_URL": "mongodb+srv://kingsatur16:laos1212aX@cluster11office.wy6qs.mongodb.net/",
-    "PORT": "8000",
-    "REDIS_URL": "redis://localhost:6379",
-    "NODE_ENV": "production",
-    "saltRouds": "10",
-    "SESSION_SECRET": "abcde111"
-  }
+    { "src": "/(.*)", "dest": "/index.js" }
+  ]
 }

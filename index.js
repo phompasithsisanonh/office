@@ -103,4 +103,7 @@ const start = async () => {
     process.exit(1);
   }
 };
-
+start().catch((error) => {
+  console.error("Setup Error:", error);
+  process.exit(1);
+});

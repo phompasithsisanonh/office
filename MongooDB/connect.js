@@ -9,14 +9,14 @@ const options = {
 
 const connectDB = async (url) => {
   try {
-    await mongoose.connect(url, {
+    await mongoose.connect(url,options,{
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     });
-    console.log('MongoDB connected');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1);
+    console.log("DB is connected");
+  } catch (err) {
+    console.error("Error connecting to DB:", err);
+    process.exit(1); // Exit the process if the database connection fails
   }
 };
 
